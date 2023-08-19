@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
+  constructor(private configService: ConfigService) {}
+
   getHello(): string {
     return `Hello from ${
-      process.env.ENVIRONMENT || '[no ENVIRONMENT selected]'
+      this.configService.get('ENVIRONMENT') || '[no ENVIRONMENT selected]'
     }`;
   }
 }
