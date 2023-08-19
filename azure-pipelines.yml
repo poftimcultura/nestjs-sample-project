@@ -18,7 +18,7 @@ steps:
 - task: Npm@1
   inputs:
     command: 'install'
-    workingDir: '$(Build.SourcesDirectory)'
+    workingDir: '$(Build.SourcesDirectory)/nestjs-sample'
 
 - task: Npm@0
   displayName: Build NestJS
