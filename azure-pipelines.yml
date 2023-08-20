@@ -20,10 +20,9 @@ steps:
   
 - task: CopyFiles@2
   inputs:
-    sourceFolder: '$(Build.SourcesDirectory)'
-    contents: /**
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Copy project files'
+    SourceFolder: '$(Build.SourceDirectory)'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: PublishPipelineArtifact@1
   inputs:
