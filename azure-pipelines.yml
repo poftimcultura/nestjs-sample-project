@@ -7,29 +7,35 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '16.x'
+    versionSpec: '10.x'
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
-  displayName: 'npm install'
-
-- script: |
+    npm ci
     npm run build
-  displayName: 'npm build'
-  
+  displayName: 'npm install and build'
+
 - task: CopyFiles@2
   inputs:
-    sourceFolder: '$(Build.SourcesDirectory)'
-    contents: |
-       src/*
-       public/*
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Copy project files'
+    Contents: 'package*.json'
+    TargetFolder: 'dist'
 
-- task: PublishPipelineArtifact@1
+- task: Npm@1
   inputs:
-    artifactName: e2e-server
-    targetPath: '$(Build.ArtifactStagingDirectory)'
-    publishLocation: 'pipeline'
-  displayName: 'Publish npm artifact'
+    command: 'custom'
+    workingDir: 'dist'
+    customCommand: 'ci --production'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'dist'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: 'dist.zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'dist.zip'
+    ArtifactName: 'SampleApp'
+    publishLocation: 'Container'
