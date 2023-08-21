@@ -13,8 +13,11 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
+ENV ENVIRONMENT production
+ENV PORT 8080
+
 # Expose the port your NestJS app will run on (change this to your app's port)
-EXPOSE 3000
+EXPOSE 8080
 
 # Start the NestJS application
 CMD ["npm", "run", "start:prod"]
