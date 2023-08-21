@@ -14,4 +14,9 @@ export class AppController {
   getEnv(): string {
     return this.appService.getEnv();
   }
+
+  @Get('/message')
+  getMessage(): string {
+    return this.appService.getMessage();
+  }
 }
