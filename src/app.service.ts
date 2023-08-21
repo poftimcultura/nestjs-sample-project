@@ -6,8 +6,7 @@ export class AppService {
   constructor(private configService: ConfigService) {}
 
   getHello(): string {
-    return `Hello from ${
-      this.configService.get('ENVIRONMENT') || '[no ENVIRONMENT selected]'
-    }`;
+    // console.log(this.configService.get('ENVIRONMENT'));
+    return 'Hello World!';
   }
 }
