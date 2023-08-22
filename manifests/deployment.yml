@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: poftimculturanestjssampleproject 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poftimculturanestjssampleproject
+  template:
+    metadata:
+      labels:
+        app: poftimculturanestjssampleproject 
+    spec:
+      containers:
+        - name: poftimculturanestjssampleproject 
+          image: valenciacr.azurecr.io/poftimculturanestjssampleproject
+          ports:
+          - containerPort: 8080
