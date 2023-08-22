@@ -1,19 +1,41 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: poftimculturanestjssampleproject 
+  name: app-deployment
+  labels:
+    app: app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: poftimculturanestjssampleproject
+      app: app
   template:
     metadata:
       labels:
-        app: poftimculturanestjssampleproject 
+        app: app
     spec:
       containers:
-        - name: poftimculturanestjssampleproject 
+        - name: app
           image: valenciacr.azurecr.io/poftimculturanestjssampleproject
           ports:
-          - containerPort: 8080
+            - containerPort: 8080
+          env:
+            - name: MONGO_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-config
+                  key: mongo-url
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: USER_NAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: USER_PASS
+            - name: ENVIRONMENT
+              value: PRODUCTION
+            - name: PORT
+              value: '8080'
